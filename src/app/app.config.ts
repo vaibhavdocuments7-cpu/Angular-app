@@ -21,6 +21,7 @@ import { environment } from '../environments/environment';
 import { AuthService } from './services/auth.service';
 import { MsalAuthService } from './services/msal-auth.service';
 import { OidcAuthService } from './services/oidc-auth.service';
+import { ManualAuthService } from './services/manual-auth.service';
 
 const azureAd = environment.azureAd;
 
@@ -92,6 +93,32 @@ function getOidcProviders() {
 }
 
 // ============================================================================
+// Manual Providers (only used when authProvider = 'manual')
+// ============================================================================
+function getManualProviders() {
+  return [
+    { provide: AuthService, useClass: ManualAuthService },
+  ];
+}
+
+// ============================================================================
+// Provider Selector — returns the right providers based on environment
+// ============================================================================
+function getAuthProviders() {
+  switch (environment.authProvider) {
+    case 'msal':
+      return getMsalProviders();
+    case 'oidc':
+      return getOidcProviders();
+    case 'manual':
+      return getManualProviders();
+    default:
+      console.warn(`Unknown auth provider: ${environment.authProvider}, falling back to MSAL`);
+      return getMsalProviders();
+  }
+}
+
+// ============================================================================
 // App Configuration — switches providers based on environment
 // ============================================================================
 export const appConfig: ApplicationConfig = {
@@ -102,7 +129,7 @@ export const appConfig: ApplicationConfig = {
     provideNoopAnimations(),
 
     // ⭐ Conditionally load auth providers based on environment variable
-    ...(environment.authProvider === 'msal' ? getMsalProviders() : getOidcProviders()),
+    ...getAuthProviders(),
   ],
 };
 

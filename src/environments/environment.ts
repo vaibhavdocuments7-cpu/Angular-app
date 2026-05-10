@@ -2,15 +2,16 @@
 // Environment Configuration
 // ============================================================================
 // Switch authProvider to change authentication library:
-//   'msal' = Microsoft Authentication Library (Microsoft's official SDK)
-//   'oidc' = angular-auth-oidc-client (generic OpenID Connect library)
-// Both use the SAME Azure AD App Registration — no portal changes needed
+//   'msal'   = Microsoft Authentication Library (Microsoft's official SDK)
+//   'oidc'   = angular-auth-oidc-client (generic OpenID Connect library)
+//   'manual' = Pure OAuth 2.0 + PKCE (zero library — raw fetch + Web Crypto)
+// All three use the SAME Azure AD App Registration — no portal changes needed
 
 export const environment = {
   production: false,
 
   // ⭐ CHANGE THIS to switch auth provider
-  authProvider: 'oidc' as 'msal' | 'oidc',
+  authProvider: 'manual' as 'msal' | 'oidc' | 'manual',
 
   // Azure AD App Registration (shared by both providers)
   azureAd: {
