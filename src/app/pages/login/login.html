@@ -1,0 +1,42 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="logo">
+      <svg width="40" height="40" viewBox="0 0 21 21" fill="none">
+        <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+        <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+        <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+        <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+      </svg>
+      <h1>Angular App</h1>
+    </div>
+
+    <!-- Not Logged In -->
+    @if (!isLoggedIn) {
+      <div class="welcome-section">
+        <h2>Welcome</h2>
+        <p>Sign in with your Microsoft account to continue</p>
+        <p class="provider-badge">Auth Provider: <strong>{{ authProvider.toUpperCase() }}</strong></p>
+        <button class="login-btn" (click)="login()">
+          <svg width="20" height="20" viewBox="0 0 21 21" fill="none" style="margin-right: 8px;">
+            <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+            <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+            <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+            <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+          </svg>
+          Sign in with Microsoft
+        </button>
+      </div>
+    }
+
+    <!-- Logged In -->
+    @if (isLoggedIn) {
+      <div class="profile-section">
+        <div class="avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+        <h2>Welcome, {{ userName }}!</h2>
+        <p class="email">{{ userEmail }}</p>
+        <div class="info-badge">✅ Authenticated via {{ authProvider.toUpperCase() }}</div>
+        <button class="logout-btn" (click)="logout()">Sign Out</button>
+      </div>
+    }
+  </div>
+</div>

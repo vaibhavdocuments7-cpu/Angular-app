@@ -1,0 +1,25 @@
+<div class="home-container">
+  <div class="home-card">
+    <h1>🏠 Dashboard</h1>
+    <p>You are successfully authenticated via <strong>{{ authProvider.toUpperCase() }}</strong>!</p>
+
+    <button class="btn primary" (click)="loadProfile()">
+      Load My Profile (Graph API)
+    </button>
+
+    @if (userProfile) {
+      <div class="profile-data">
+        <h3>Microsoft Graph Response:</h3>
+        <table>
+          <tr><td><strong>Name</strong></td><td>{{ userProfile.displayName }}</td></tr>
+          <tr><td><strong>Email</strong></td><td>{{ userProfile.mail || userProfile.userPrincipalName }}</td></tr>
+          <tr><td><strong>Job Title</strong></td><td>{{ userProfile.jobTitle || 'N/A' }}</td></tr>
+          <tr><td><strong>Office</strong></td><td>{{ userProfile.officeLocation || 'N/A' }}</td></tr>
+          <tr><td><strong>Phone</strong></td><td>{{ userProfile.mobilePhone || 'N/A' }}</td></tr>
+        </table>
+      </div>
+    }
+
+    <button class="btn danger" (click)="logout()">Sign Out</button>
+  </div>
+</div>
